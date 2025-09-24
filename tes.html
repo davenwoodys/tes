@@ -336,6 +336,20 @@
             line-height: 1.5;
         }
 
+        .product-duration {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .product-duration i {
+            font-size: 1rem;
+            color: var(--accent);
+        }
+
         .product-price {
             font-weight: 600;
             color: var(--accent);
@@ -488,6 +502,19 @@
             font-weight: 600;
             color: var(--accent);
             margin-top: 4px;
+        }
+
+        .modal-product-duration {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .modal-product-duration i {
+            color: var(--accent);
+            font-size: 1.1rem;
         }
 
         .modal-product-description {
@@ -763,6 +790,10 @@
                     <span class="modal-product-category"></span>
                     <h2 class="modal-product-title"></h2>
                     <p class="modal-product-price"></p>
+                    <p class="modal-product-duration">
+                        <i class='bx bx-time-five'></i>
+                        <span class="modal-product-duration-text"></span>
+                    </p>
                     <p class="modal-product-description"></p>
                 </div>
             </div>
@@ -817,8 +848,11 @@
                     <div id="icon-preview"><i class='bx bx-image-alt'></i></div>
                 </div>
 
-                <label for="product-price-input">Harga (Rp)</label>
-                <input type="number" id="product-price-input" min="0" step="1000" placeholder="contoh: 25000" required>
+                <label for="product-price-input">Harga (Rp) - Opsional</label>
+                <input type="number" id="product-price-input" min="0" step="1000" placeholder="contoh: 25000">
+
+                <label for="product-duration-input">Durasi (Opsional)</label>
+                <input type="text" id="product-duration-input" placeholder="contoh: 1 Bulan">
 
                 <label for="product-description-input">Deskripsi</label>
                 <textarea id="product-description-input" rows="4" required></textarea>
@@ -839,6 +873,8 @@
 
             const modal = document.getElementById('product-modal');
             const modalCloseBtn = document.querySelector('.modal-close');
+            const modalDurationWrapper = document.querySelector('.modal-product-duration');
+            const modalDurationText = document.querySelector('.modal-product-duration-text');
             const productGrid = document.querySelector('.product-grid');
             const pricingOptions = document.querySelectorAll('.pricing-options .option');
 
@@ -914,6 +950,7 @@
                     category: 'Musik & Video',
                     icon: 'bxl-spotify',
                     description: 'Nikmati jutaan lagu dan podcast favorit tanpa iklan dengan kualitas audio terbaik dan playlist personal.',
+                    duration: '1 Bulan',
                     price: 16000
                 },
                 {
@@ -921,6 +958,7 @@
                     category: 'Desain & Kreatif',
                     icon: 'bx-palette',
                     description: 'Buat desain profesional dalam hitungan menit. Akses template eksklusif, brand kit, dan ribuan asset premium.',
+                    duration: '1 Bulan',
                     price: 45000
                 },
                 {
@@ -928,6 +966,7 @@
                     category: 'Produktivitas',
                     icon: 'bx-brain',
                     description: 'Dapatkan kemampuan AI tercanggih untuk membantu belajar, bekerja, dan berkarya tanpa batas dengan respons super cepat.',
+                    duration: '1 Bulan',
                     price: 320000
                 },
                 {
@@ -935,6 +974,7 @@
                     category: 'Musik & Video',
                     icon: 'bx-movie-play',
                     description: 'Edit video sinematik dengan filter eksklusif, efek premium, dan ekspor tanpa watermark langsung dari perangkatmu.',
+                    duration: '1 Bulan',
                     price: 28000
                 },
                 {
@@ -942,6 +982,7 @@
                     category: 'Produktivitas',
                     icon: 'bx-bulb',
                     description: 'Organisir catatan, tugas, dan dokumen tim dalam satu workspace terpadu lengkap dengan dukungan AI pintar.',
+                    duration: '1 Tahun',
                     price: 150000
                 }
             ];
@@ -952,11 +993,13 @@
                     const card = document.createElement('div');
                     card.className = 'product-card';
                     const priceLabel = formatPriceLabel(product.price);
+                    const durationBadge = product.duration ? `<span class="product-duration"><i class='bx bx-time-five'></i> ${product.duration}</span>` : '';
                     card.innerHTML = `
                         <div class="product-image"><i class='bx ${product.icon}'></i></div>
                         <span class="product-category"><i class='bx bx-category'></i> ${product.category}</span>
                         <h3 class="product-name">${product.name}</h3>
                         <p class="product-description">${truncateText(product.description)}</p>
+                        ${durationBadge}
                         <span class="product-price">${priceLabel}</span>
                         <span class="product-cta">Lihat detail <i class='bx bx-right-arrow-alt'></i></span>
                     `;
@@ -965,6 +1008,7 @@
                     card.dataset.icon = product.icon;
                     card.dataset.description = product.description;
                     card.dataset.price = product.price ?? '';
+                    card.dataset.duration = product.duration ?? '';
                     card.addEventListener('click', () => showModal(card.dataset));
                     productGrid.appendChild(card);
                 });
@@ -983,6 +1027,17 @@
                 document.querySelector('.modal-product-title').textContent = data.name;
                 const priceLabel = formatPriceLabel(data.price);
                 document.querySelector('.modal-product-price').textContent = priceLabel;
+                const rawDuration = typeof data.duration === 'string' ? data.duration : '';
+                const durationText = rawDuration.trim();
+                if (modalDurationWrapper && modalDurationText) {
+                    if (durationText) {
+                        modalDurationText.textContent = durationText;
+                        modalDurationWrapper.style.display = 'flex';
+                    } else {
+                        modalDurationText.textContent = '';
+                        modalDurationWrapper.style.display = 'none';
+                    }
+                }
                 document.querySelector('.modal-product-description').textContent = data.description;
 
                 const firstOptionPrice = document.querySelector('.pricing-options .option:first-child .option-price');
@@ -992,7 +1047,8 @@
 
                 document.querySelector('.modal-buy-btn').onclick = () => {
                     const selectedOption = document.querySelector('.pricing-options .option.selected span:first-child').textContent;
-                    const message = encodeURIComponent(`Halo AsoyJr Store, saya tertarik untuk membeli:\n\nProduk: *${data.name}*\nHarga: *${priceLabel}*\nPilihan: *${selectedOption}*\n\nMohon informasinya.`);
+                    const durationLine = durationText ? `\nDurasi: *${durationText}*` : '';
+                    const message = encodeURIComponent(`Halo AsoyJr Store, saya tertarik untuk membeli:\n\nProduk: *${data.name}*\nHarga: *${priceLabel}*${durationLine}\nPilihan: *${selectedOption}*\n\nMohon informasinya.`);
                     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
                 };
 
@@ -1034,11 +1090,14 @@
                 const rawPrice = document.getElementById('product-price-input').value.trim();
                 const parsedPrice = rawPrice === '' ? null : Number(rawPrice);
                 const normalizedPrice = parsedPrice === null || Number.isNaN(parsedPrice) ? null : Math.max(parsedPrice, 0);
+                const rawDuration = document.getElementById('product-duration-input').value.trim();
+                const normalizedDuration = rawDuration === '' ? null : rawDuration;
                 const newProduct = {
                     name: document.getElementById('product-name-input').value.trim(),
                     category: document.getElementById('product-category-input').value,
                     icon: document.getElementById('product-icon-input').value.trim() || 'bx-package',
                     price: normalizedPrice,
+                    duration: normalizedDuration,
                     description: document.getElementById('product-description-input').value.trim()
                 };
                 products.push(newProduct);
