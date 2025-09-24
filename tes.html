@@ -336,6 +336,14 @@
             line-height: 1.5;
         }
 
+        .product-price {
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.95rem;
+            margin-top: 6px;
+            display: inline-block;
+        }
+
         .product-cta {
             margin-top: 8px;
             font-size: 0.85rem;
@@ -474,6 +482,12 @@
         .modal-product-title {
             font-size: 1.3rem;
             color: #f8fafc;
+        }
+
+        .modal-product-price {
+            font-weight: 600;
+            color: var(--accent);
+            margin-top: 4px;
         }
 
         .modal-product-description {
@@ -748,6 +762,7 @@
                 <div class="modal-product-details">
                     <span class="modal-product-category"></span>
                     <h2 class="modal-product-title"></h2>
+                    <p class="modal-product-price"></p>
                     <p class="modal-product-description"></p>
                 </div>
             </div>
@@ -801,6 +816,9 @@
                     <label>Pratinjau Ikon</label>
                     <div id="icon-preview"><i class='bx bx-image-alt'></i></div>
                 </div>
+
+                <label for="product-price-input">Harga (Rp)</label>
+                <input type="number" id="product-price-input" min="0" step="1000" placeholder="contoh: 25000" required>
 
                 <label for="product-description-input">Deskripsi</label>
                 <textarea id="product-description-input" rows="4" required></textarea>
@@ -875,36 +893,56 @@
 
             const truncateText = (text, maxLength = 110) => text.length > maxLength ? `${text.slice(0, maxLength - 3)}...` : text;
 
+            const formatCurrency = (value) => new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(value);
+
+            const formatPriceLabel = (price) => {
+                if (price === undefined || price === null || price === '') {
+                    return 'Hubungi admin';
+                }
+
+                const numericPrice = Number(price);
+                return Number.isNaN(numericPrice) ? 'Hubungi admin' : formatCurrency(numericPrice);
+            };
+
             const products = [
                 {
                     name: 'Spotify Premium',
                     category: 'Musik & Video',
                     icon: 'bxl-spotify',
-                    description: 'Nikmati jutaan lagu dan podcast favorit tanpa iklan dengan kualitas audio terbaik dan playlist personal.'
+                    description: 'Nikmati jutaan lagu dan podcast favorit tanpa iklan dengan kualitas audio terbaik dan playlist personal.',
+                    price: 16000
                 },
                 {
                     name: 'Canva Pro',
                     category: 'Desain & Kreatif',
                     icon: 'bx-palette',
-                    description: 'Buat desain profesional dalam hitungan menit. Akses template eksklusif, brand kit, dan ribuan asset premium.'
+                    description: 'Buat desain profesional dalam hitungan menit. Akses template eksklusif, brand kit, dan ribuan asset premium.',
+                    price: 45000
                 },
                 {
                     name: 'ChatGPT Plus',
                     category: 'Produktivitas',
                     icon: 'bx-brain',
-                    description: 'Dapatkan kemampuan AI tercanggih untuk membantu belajar, bekerja, dan berkarya tanpa batas dengan respons super cepat.'
+                    description: 'Dapatkan kemampuan AI tercanggih untuk membantu belajar, bekerja, dan berkarya tanpa batas dengan respons super cepat.',
+                    price: 320000
                 },
                 {
                     name: 'CapCut Pro',
                     category: 'Musik & Video',
                     icon: 'bx-movie-play',
-                    description: 'Edit video sinematik dengan filter eksklusif, efek premium, dan ekspor tanpa watermark langsung dari perangkatmu.'
+                    description: 'Edit video sinematik dengan filter eksklusif, efek premium, dan ekspor tanpa watermark langsung dari perangkatmu.',
+                    price: 28000
                 },
                 {
                     name: 'Notion AI Workspace',
                     category: 'Produktivitas',
                     icon: 'bx-bulb',
-                    description: 'Organisir catatan, tugas, dan dokumen tim dalam satu workspace terpadu lengkap dengan dukungan AI pintar.'
+                    description: 'Organisir catatan, tugas, dan dokumen tim dalam satu workspace terpadu lengkap dengan dukungan AI pintar.',
+                    price: 150000
                 }
             ];
 
@@ -913,17 +951,20 @@
                 products.forEach(product => {
                     const card = document.createElement('div');
                     card.className = 'product-card';
+                    const priceLabel = formatPriceLabel(product.price);
                     card.innerHTML = `
                         <div class="product-image"><i class='bx ${product.icon}'></i></div>
                         <span class="product-category"><i class='bx bx-category'></i> ${product.category}</span>
                         <h3 class="product-name">${product.name}</h3>
                         <p class="product-description">${truncateText(product.description)}</p>
+                        <span class="product-price">${priceLabel}</span>
                         <span class="product-cta">Lihat detail <i class='bx bx-right-arrow-alt'></i></span>
                     `;
                     card.dataset.name = product.name;
                     card.dataset.category = product.category;
                     card.dataset.icon = product.icon;
                     card.dataset.description = product.description;
+                    card.dataset.price = product.price ?? '';
                     card.addEventListener('click', () => showModal(card.dataset));
                     productGrid.appendChild(card);
                 });
@@ -940,11 +981,18 @@
                 document.querySelector('.modal-product-icon').innerHTML = `<i class='bx ${data.icon}'></i>`;
                 document.querySelector('.modal-product-category').textContent = data.category;
                 document.querySelector('.modal-product-title').textContent = data.name;
+                const priceLabel = formatPriceLabel(data.price);
+                document.querySelector('.modal-product-price').textContent = priceLabel;
                 document.querySelector('.modal-product-description').textContent = data.description;
+
+                const firstOptionPrice = document.querySelector('.pricing-options .option:first-child .option-price');
+                if (firstOptionPrice) {
+                    firstOptionPrice.textContent = priceLabel;
+                }
 
                 document.querySelector('.modal-buy-btn').onclick = () => {
                     const selectedOption = document.querySelector('.pricing-options .option.selected span:first-child').textContent;
-                    const message = encodeURIComponent(`Halo AsoyJr Store, saya tertarik untuk membeli:\n\nProduk: *${data.name}*\nPilihan: *${selectedOption}*\n\nMohon informasinya.`);
+                    const message = encodeURIComponent(`Halo AsoyJr Store, saya tertarik untuk membeli:\n\nProduk: *${data.name}*\nHarga: *${priceLabel}*\nPilihan: *${selectedOption}*\n\nMohon informasinya.`);
                     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
                 };
 
@@ -983,10 +1031,14 @@
 
             addProductForm.addEventListener('submit', (event) => {
                 event.preventDefault();
+                const rawPrice = document.getElementById('product-price-input').value.trim();
+                const parsedPrice = rawPrice === '' ? null : Number(rawPrice);
+                const normalizedPrice = parsedPrice === null || Number.isNaN(parsedPrice) ? null : Math.max(parsedPrice, 0);
                 const newProduct = {
                     name: document.getElementById('product-name-input').value.trim(),
                     category: document.getElementById('product-category-input').value,
                     icon: document.getElementById('product-icon-input').value.trim() || 'bx-package',
+                    price: normalizedPrice,
                     description: document.getElementById('product-description-input').value.trim()
                 };
                 products.push(newProduct);
