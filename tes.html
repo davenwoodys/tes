@@ -6,6 +6,8 @@
     <title>AsoyJr Store - Digital Goods Mobile</title>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&family=Playfair+Display:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
         :root {
             --bg: #0f172a;
             --surface: #172544;
@@ -15,6 +17,8 @@
             --accent: #38bdf8;
             --accent-strong: #0ea5e9;
             --radius-lg: 18px;
+            --glass: rgba(15, 23, 42, 0.65);
+            --glass-border: rgba(148, 163, 184, 0.25);
         }
 
         * {
@@ -24,8 +28,11 @@
         }
 
         body {
-            font-family: 'Inter', 'Poppins', 'Segoe UI', sans-serif;
-            background: var(--bg);
+            font-family: 'Inter', 'Space Grotesk', 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.18), transparent 45%),
+                        radial-gradient(circle at 80% 10%, rgba(14, 165, 233, 0.16), transparent 45%),
+                        radial-gradient(circle at 50% 90%, rgba(14, 116, 144, 0.2), transparent 55%),
+                        var(--bg);
             color: var(--text);
             min-height: 100vh;
             display: flex;
@@ -54,7 +61,45 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background: rgba(15, 23, 42, 0.92);
+            background: rgba(8, 13, 24, 0.82);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(148, 163, 184, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app::before,
+        .app::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.35), transparent 65%);
+            filter: blur(20px);
+            opacity: 0.6;
+            animation: float 16s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .app::before {
+            top: -40px;
+            right: -60px;
+        }
+
+        .app::after {
+            bottom: -50px;
+            left: -70px;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+            50% {
+                transform: translate3d(12px, 18px, 0) scale(1.05);
+            }
         }
 
         .header {
@@ -70,20 +115,23 @@
             align-items: center;
             justify-content: space-between;
             padding: 16px 20px;
+            position: relative;
+            z-index: 2;
         }
 
-        .logo {
+        .brand {
             display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: var(--text);
+            flex-direction: column;
+            line-height: 1.05;
+            font-weight: 700;
+            letter-spacing: -0.01em;
         }
 
-        .logo i {
-            font-size: 1.4rem;
-            color: var(--accent);
+        .brand span {
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
         }
 
         .hamburger-btn {
@@ -122,6 +170,8 @@
             padding: 12px 20px 20px;
             background: rgba(15, 23, 42, 0.97);
             border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+            position: relative;
+            z-index: 2;
         }
 
         .nav-menu.show {
@@ -142,6 +192,8 @@
         main {
             flex: 1;
             padding: 0 20px 48px;
+            position: relative;
+            z-index: 1;
         }
 
         section {
@@ -158,6 +210,8 @@
             gap: 18px;
             text-align: center;
             align-items: center;
+            position: relative;
+            isolation: isolate;
         }
 
         .hero-badge {
@@ -174,15 +228,27 @@
         }
 
         .hero-content h1 {
-            font-size: 1.9rem;
+            font-size: 2.1rem;
             line-height: 1.3;
             color: #f8fafc;
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            text-shadow: 0 10px 35px rgba(15, 23, 42, 0.95);
         }
 
         .hero-content p {
             color: var(--muted);
             font-size: 0.95rem;
             line-height: 1.6;
+        }
+
+        .hero-glow {
+            position: absolute;
+            inset: auto -40px -60px;
+            height: 160px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.25), transparent 65%);
+            filter: blur(25px);
+            opacity: 0.8;
+            z-index: -1;
         }
 
         .hero-actions {
@@ -203,6 +269,7 @@
             border: none;
             cursor: pointer;
             transition: transform 0.2s ease, background 0.2s ease;
+            box-shadow: 0 15px 30px rgba(14, 165, 233, 0.18);
         }
 
         .btn-primary {
@@ -235,10 +302,11 @@
         }
 
         .stat-card {
-            background: rgba(15, 23, 42, 0.82);
-            border: 1px solid rgba(148, 163, 184, 0.16);
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
             padding: 16px;
+            backdrop-filter: blur(12px);
         }
 
         .stat-card h3 {
@@ -291,8 +359,8 @@
         }
 
         .product-card {
-            background: rgba(15, 23, 42, 0.82);
-            border: 1px solid rgba(148, 163, 184, 0.14);
+            background: var(--glass);
+            border: 1px solid rgba(148, 163, 184, 0.18);
             border-radius: var(--radius-lg);
             padding: 20px;
             display: flex;
@@ -300,6 +368,7 @@
             gap: 10px;
             cursor: pointer;
             transition: transform 0.2s ease, border-color 0.2s ease;
+            backdrop-filter: blur(12px);
         }
 
         .product-card:active {
@@ -379,13 +448,165 @@
         }
 
         .logo-generator-card {
-            background: rgba(15, 23, 42, 0.82);
-            border: 1px solid rgba(148, 163, 184, 0.14);
+            background: var(--glass);
+            border: 1px solid rgba(148, 163, 184, 0.18);
             border-radius: var(--radius-lg);
             padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 18px;
+            backdrop-filter: blur(12px);
+        }
+
+        #creative-tools {
+            margin-top: 44px;
+        }
+
+        .tool-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .tool-card {
+            background: var(--glass);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(14px);
+        }
+
+        .tool-card::after {
+            content: "";
+            position: absolute;
+            inset: auto -40px -80px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.2), transparent 65%);
+            pointer-events: none;
+        }
+
+        .tool-card h3 {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tool-description {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .palette-swatch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 10px;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.45);
+            border: 1px solid rgba(148, 163, 184, 0.12);
+        }
+
+        .palette-swatch span {
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .color-preview {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+            border: 1px solid rgba(148, 163, 184, 0.22);
+        }
+
+        .gradient-preview {
+            height: 140px;
+            border-radius: 16px;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+        }
+
+        .gradient-controls,
+        .typography-controls {
+            display: grid;
+            gap: 12px;
+        }
+
+        .gradient-css-output {
+            background: rgba(15, 23, 42, 0.52);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 0.8rem;
+            word-break: break-all;
+        }
+
+        .typography-preview {
+            min-height: 110px;
+            border-radius: 16px;
+            padding: 18px;
+            background: rgba(15, 23, 42, 0.55);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .tool-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tool-actions .btn {
+            flex: 1;
+            min-width: 140px;
+            box-shadow: none;
+        }
+
+        .tool-input-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .tool-card label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .tool-card input,
+        .tool-card select,
+        .tool-card textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            background: rgba(15, 23, 42, 0.45);
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .tool-card input[type="color"] {
+            padding: 0;
+            height: 48px;
+        }
+
+        .tool-card input[type="range"] {
+            accent-color: var(--accent);
         }
 
         .logo-methods {
@@ -866,7 +1087,10 @@
     <div class="app">
         <header class="header">
             <div class="navbar">
-                <a href="#hero" class="logo"><i class='bx bxs-color-fill'></i><span>AsoyJr</span>Store</a>
+                <a href="#hero" class="brand">
+                    AsoyJr Store
+                    <span>Digital Boutique</span>
+                </a>
                 <button class="hamburger-btn" aria-label="Buka navigasi">
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -876,7 +1100,7 @@
             <ul class="nav-menu">
                 <li><a href="#hero">Beranda</a></li>
                 <li><a href="#produk">Katalog</a></li>
-                <li><a href="#logo-generator">Buat Logo</a></li>
+                <li><a href="#creative-tools">Creative Toolkit</a></li>
                 <li><a href="#footer">Kontak</a></li>
                 <li><a href="#produk" class="btn btn-primary">Mulai Belanja</a></li>
             </ul>
@@ -905,6 +1129,98 @@
                             <h3>100%</h3>
                             <p>Transaksi Aman</p>
                         </div>
+                    </div>
+                    <div class="hero-glow"></div>
+                </div>
+            </section>
+
+            <section id="creative-tools">
+                <div class="section-header">
+                    <span class="section-badge"><i class='bx bx-planet'></i> Creative Toolkit</span>
+                    <h2>Eksplorasi Ide Dengan Tools Gratis</h2>
+                    <p>Kembangkan branding produkmu lewat generator warna, pencipta gradien, dan playground tipografi yang langsung bisa kamu gunakan.</p>
+                </div>
+                <div class="tool-grid">
+                    <div class="tool-card" id="palette-tool">
+                        <h3><i class='bx bx-grid-alt'></i> Palette Mixer</h3>
+                        <p class="tool-description">Temukan kombinasi warna segar dalam sekali klik. Simpan kode warnanya untuk dipakai di desain produkmu.</p>
+                        <div class="palette-grid" id="palette-grid">
+                            <!-- Palette swatches injected by JavaScript -->
+                        </div>
+                        <div class="tool-actions">
+                            <button type="button" class="btn btn-primary" id="generate-palette-btn"><i class='bx bx-refresh'></i> Acak Palet</button>
+                            <button type="button" class="btn btn-ghost" id="copy-palette-btn"><i class='bx bx-copy'></i> Salin Kode</button>
+                        </div>
+                        <p class="input-hint" id="palette-status">Klik "Acak Palet" untuk memulai eksplorasi warna.</p>
+                    </div>
+
+                    <div class="tool-card" id="gradient-tool">
+                        <h3><i class='bx bx-paint'></i> Gradient Crafter</h3>
+                        <p class="tool-description">Racik gradien dreamy untuk hero banner atau latar kartu produk. Atur dua warna dan sudutnya sesuai selera.</p>
+                        <div class="gradient-preview" id="gradient-preview"></div>
+                        <div class="gradient-controls">
+                            <div class="tool-input-row">
+                                <div>
+                                    <label for="gradient-color-a">Warna Awal</label>
+                                    <input type="color" id="gradient-color-a" value="#38bdf8">
+                                </div>
+                                <div>
+                                    <label for="gradient-color-b">Warna Akhir</label>
+                                    <input type="color" id="gradient-color-b" value="#0ea5e9">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="gradient-angle">Sudut Gradien (<span id="gradient-angle-value">120</span>°)</label>
+                                <input type="range" id="gradient-angle" min="0" max="360" value="120">
+                            </div>
+                        </div>
+                        <div class="gradient-css-output" id="gradient-css-output">linear-gradient(120deg, #38bdf8, #0ea5e9)</div>
+                        <div class="tool-actions">
+                            <button type="button" class="btn btn-primary" id="copy-gradient-btn"><i class='bx bx-code-alt'></i> Salin CSS</button>
+                        </div>
+                        <p class="input-hint" id="gradient-status">Atur warna untuk langsung mendapatkan kode CSS gradien.</p>
+                    </div>
+
+                    <div class="tool-card" id="typography-tool">
+                        <h3><i class='bx bx-text'></i> Typography Playground</h3>
+                        <p class="tool-description">Preview copywriting produkmu dengan kombinasi font berbeda. Atur ukuran, spasi huruf, dan tinggi baris untuk nuansa yang pas.</p>
+                        <div class="typography-controls">
+                            <div>
+                                <label for="typography-input">Teks</label>
+                                <textarea id="typography-input" rows="3">Ceritakan value produkmu dalam 2 kalimat catchy.</textarea>
+                            </div>
+                            <div class="tool-input-row">
+                                <div>
+                                    <label for="typography-font">Gaya Font</label>
+                                    <select id="typography-font">
+                                        <option value="'Space Grotesk', 'Inter', sans-serif">Space Grotesk</option>
+                                        <option value="'Inter', 'Space Grotesk', sans-serif">Inter</option>
+                                        <option value="'Poppins', 'Inter', sans-serif">Poppins</option>
+                                        <option value="'Playfair Display', serif">Playfair Display</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="typography-weight">Ketebalan</label>
+                                    <select id="typography-weight">
+                                        <option value="500">Medium</option>
+                                        <option value="600" selected>Tebal</option>
+                                        <option value="700">Extra Bold</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="tool-input-row">
+                                <div>
+                                    <label for="typography-size">Ukuran (px)</label>
+                                    <input type="range" id="typography-size" min="16" max="36" value="22">
+                                </div>
+                                <div>
+                                    <label for="typography-spacing">Spasi Huruf</label>
+                                    <input type="range" id="typography-spacing" min="-2" max="6" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="typography-preview" id="typography-preview">Ceritakan value produkmu dalam 2 kalimat catchy.</div>
+                        <p class="input-hint" id="typography-status">Sesuaikan slider untuk melihat perubahan tipografi secara real-time.</p>
                     </div>
                 </div>
             </section>
@@ -1127,10 +1443,144 @@
             const copyLogoBtn = document.getElementById('copy-logo-btn');
             const toast = document.getElementById('toast-notification');
 
+            const paletteGrid = document.getElementById('palette-grid');
+            const generatePaletteBtn = document.getElementById('generate-palette-btn');
+            const copyPaletteBtn = document.getElementById('copy-palette-btn');
+            const paletteStatus = document.getElementById('palette-status');
+
+            const gradientPreview = document.getElementById('gradient-preview');
+            const gradientColorA = document.getElementById('gradient-color-a');
+            const gradientColorB = document.getElementById('gradient-color-b');
+            const gradientAngle = document.getElementById('gradient-angle');
+            const gradientAngleValue = document.getElementById('gradient-angle-value');
+            const gradientCssOutput = document.getElementById('gradient-css-output');
+            const copyGradientBtn = document.getElementById('copy-gradient-btn');
+            const gradientStatus = document.getElementById('gradient-status');
+
+            const typographyInput = document.getElementById('typography-input');
+            const typographyFont = document.getElementById('typography-font');
+            const typographyWeight = document.getElementById('typography-weight');
+            const typographySize = document.getElementById('typography-size');
+            const typographySpacing = document.getElementById('typography-spacing');
+            const typographyPreview = document.getElementById('typography-preview');
+            const typographyStatus = document.getElementById('typography-status');
+
             const whatsappNumber = '6281234567890';
 
             const logoCanvas = document.createElement('canvas');
             const logoCtx = logoCanvas.getContext('2d');
+
+            const setPaletteStatus = (message) => {
+                if (paletteStatus) {
+                    paletteStatus.textContent = message;
+                }
+            };
+
+            const randomHexColor = () => {
+                const hex = Math.floor(Math.random() * 0xffffff)
+                    .toString(16)
+                    .padStart(6, '0');
+                return `#${hex}`.toUpperCase();
+            };
+
+            const renderPalette = (colors = []) => {
+                if (!paletteGrid) {
+                    return;
+                }
+                paletteGrid.innerHTML = '';
+                colors.forEach(color => {
+                    const swatch = document.createElement('div');
+                    swatch.className = 'palette-swatch';
+                    swatch.innerHTML = `
+                        <span>${color}</span>
+                        <div class="color-preview" style="background:${color}"></div>
+                    `;
+                    paletteGrid.appendChild(swatch);
+                });
+            };
+
+            let paletteColors = [];
+
+            const generatePalette = () => {
+                paletteColors = Array.from({ length: 5 }, () => randomHexColor());
+                renderPalette(paletteColors);
+                setPaletteStatus('Palet baru siap dipakai. Klik salin untuk menyimpan kode warna.');
+            };
+
+            const copyPalette = async () => {
+                if (!paletteColors.length) {
+                    setPaletteStatus('Generate palet terlebih dahulu sebelum menyalin.');
+                    return;
+                }
+                const paletteString = paletteColors.join(', ');
+                try {
+                    await navigator.clipboard.writeText(paletteString);
+                    setPaletteStatus('Kode warna berhasil disalin ke clipboard. Selamat berkarya!');
+                } catch (error) {
+                    console.error(error);
+                    setPaletteStatus('Gagal menyalin kode warna. Coba ulangi.');
+                }
+            };
+
+            const setGradientStatus = (message) => {
+                if (gradientStatus) {
+                    gradientStatus.textContent = message;
+                }
+            };
+
+            const updateGradientPreview = () => {
+                if (!gradientPreview || !gradientColorA || !gradientColorB || !gradientAngle || !gradientCssOutput || !gradientAngleValue) {
+                    return;
+                }
+                const colorA = gradientColorA.value;
+                const colorB = gradientColorB.value;
+                const angle = Number(gradientAngle.value);
+                gradientAngleValue.textContent = angle;
+                const gradientValue = `linear-gradient(${angle}deg, ${colorA}, ${colorB})`;
+                gradientPreview.style.background = gradientValue;
+                gradientCssOutput.textContent = gradientValue;
+                setGradientStatus('Gradien siap disalin untuk CSS atau Figma.');
+            };
+
+            const copyGradient = async () => {
+                if (!gradientCssOutput) {
+                    return;
+                }
+                try {
+                    await navigator.clipboard.writeText(gradientCssOutput.textContent.trim());
+                    setGradientStatus('Kode gradien sukses disalin.');
+                } catch (error) {
+                    console.error(error);
+                    setGradientStatus('Tidak bisa menyalin kode gradien. Silakan coba lagi.');
+                }
+            };
+
+            const setTypographyStatus = (message) => {
+                if (typographyStatus) {
+                    typographyStatus.textContent = message;
+                }
+            };
+
+            const updateTypographyPreview = () => {
+                if (!typographyPreview || !typographyInput || !typographyFont || !typographyWeight || !typographySize || !typographySpacing) {
+                    return;
+                }
+                const text = typographyInput.value.trim() || 'Masukkan teks untuk melihat pratinjau tipografi.';
+                const fontFamily = typographyFont.value;
+                const fontWeight = typographyWeight.value;
+                const fontSize = Number(typographySize.value);
+                const letterSpacing = Number(typographySpacing.value);
+                const lineHeight = 1.35 + Math.min(Math.max((fontSize - 20) / 80, -0.2), 0.45);
+
+                typographyPreview.textContent = text;
+                typographyPreview.style.fontFamily = fontFamily;
+                typographyPreview.style.fontWeight = fontWeight;
+                typographyPreview.style.fontSize = `${fontSize}px`;
+                typographyPreview.style.letterSpacing = `${letterSpacing / 10}em`;
+                typographyPreview.style.lineHeight = lineHeight.toFixed(2);
+
+                setTypographyStatus(`Font ${fontFamily.replace(/['"]/g, '').split(',')[0].trim()} ukuran ${fontSize}px siap untuk headline atau highlight copy.`);
+            };
 
             const updateLogoPreviewState = (hasImage) => {
                 if (logoPreviewFrame) {
@@ -1461,6 +1911,54 @@
                     }
                 });
             }
+
+            if (generatePaletteBtn) {
+                generatePaletteBtn.addEventListener('click', generatePalette);
+            }
+
+            if (copyPaletteBtn) {
+                copyPaletteBtn.addEventListener('click', copyPalette);
+            }
+
+            if (gradientColorA) {
+                gradientColorA.addEventListener('input', updateGradientPreview);
+            }
+
+            if (gradientColorB) {
+                gradientColorB.addEventListener('input', updateGradientPreview);
+            }
+
+            if (gradientAngle) {
+                gradientAngle.addEventListener('input', updateGradientPreview);
+            }
+
+            if (copyGradientBtn) {
+                copyGradientBtn.addEventListener('click', copyGradient);
+            }
+
+            if (typographyInput) {
+                typographyInput.addEventListener('input', updateTypographyPreview);
+            }
+
+            if (typographyFont) {
+                typographyFont.addEventListener('change', updateTypographyPreview);
+            }
+
+            if (typographyWeight) {
+                typographyWeight.addEventListener('change', updateTypographyPreview);
+            }
+
+            if (typographySize) {
+                typographySize.addEventListener('input', updateTypographyPreview);
+            }
+
+            if (typographySpacing) {
+                typographySpacing.addEventListener('input', updateTypographyPreview);
+            }
+
+            generatePalette();
+            updateGradientPreview();
+            updateTypographyPreview();
 
             const isAnyAdminActive = () => Array.from(adminSections).some(section => section.classList.contains('active'));
 
