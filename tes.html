@@ -317,6 +317,12 @@
             font-size: 1.8rem;
         }
 
+        .product-image img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+        }
+
         .product-category {
             font-size: 0.75rem;
             color: var(--accent);
@@ -366,6 +372,167 @@
             gap: 6px;
             color: var(--accent);
             font-weight: 600;
+        }
+
+        #logo-generator {
+            margin-top: 40px;
+        }
+
+        .logo-generator-card {
+            background: rgba(15, 23, 42, 0.82);
+            border: 1px solid rgba(148, 163, 184, 0.14);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .logo-methods {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .logo-method {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(148, 163, 184, 0.08);
+            color: var(--text);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .logo-method.active {
+            background: rgba(56, 189, 248, 0.14);
+            border-color: rgba(56, 189, 248, 0.32);
+            color: var(--accent);
+        }
+
+        .logo-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .logo-form.hidden {
+            display: none;
+        }
+
+        .logo-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .logo-form input[type="file"],
+        .logo-form input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            background: rgba(15, 23, 42, 0.6);
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .logo-input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .logo-input-row input {
+            flex: 1;
+        }
+
+        .logo-preview {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .logo-preview-frame {
+            width: 150px;
+            height: 150px;
+            border-radius: 28px;
+            background-image: linear-gradient(45deg, rgba(15, 23, 42, 0.4) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(15, 23, 42, 0.4) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(15, 23, 42, 0.4) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(15, 23, 42, 0.4) 75%);
+            background-size: 24px 24px;
+            background-position: 0 0, 0 12px, 12px -12px, -12px 0;
+            display: grid;
+            place-items: center;
+            padding: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-preview-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .logo-preview-frame.has-image img {
+            opacity: 1;
+        }
+
+        .logo-preview-placeholder {
+            display: grid;
+            place-items: center;
+            color: var(--muted);
+            font-size: 2.1rem;
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo-preview-frame.has-image .logo-preview-placeholder {
+            display: none;
+        }
+
+        .logo-preview-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .logo-preview-actions .btn {
+            width: 100%;
+        }
+
+        .logo-status {
+            font-size: 0.82rem;
+            color: var(--muted);
+        }
+
+        .logo-status.success {
+            color: #34d399;
+        }
+
+        .logo-status.error {
+            color: #f87171;
+        }
+
+        .logo-status.info {
+            color: var(--accent);
+        }
+
+        .input-hint {
+            font-size: 0.75rem;
+            color: var(--muted);
+            line-height: 1.5;
         }
 
         .footer {
@@ -484,6 +651,12 @@
             display: grid;
             place-items: center;
             font-size: 2.6rem;
+        }
+
+        .modal-product-icon img {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
         }
 
         .modal-product-category {
@@ -703,6 +876,7 @@
             <ul class="nav-menu">
                 <li><a href="#hero">Beranda</a></li>
                 <li><a href="#produk">Katalog</a></li>
+                <li><a href="#logo-generator">Buat Logo</a></li>
                 <li><a href="#footer">Kontak</a></li>
                 <li><a href="#produk" class="btn btn-primary">Mulai Belanja</a></li>
             </ul>
@@ -731,6 +905,51 @@
                             <h3>100%</h3>
                             <p>Transaksi Aman</p>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="logo-generator">
+                <div class="section-header">
+                    <span class="section-badge"><i class='bx bx-paint-roll'></i> Logo Produk</span>
+                    <h2>Buat Logo Biru Otomatis</h2>
+                    <p>Unggah logo milikmu atau ambil ikon transparan dari Google. Sistem akan otomatis mengubah warnanya menjadi biru dengan latar transparan.</p>
+                </div>
+                <div class="logo-generator-card">
+                    <div class="logo-methods">
+                        <button type="button" class="logo-method active" data-method="upload"><i class='bx bx-upload'></i> Upload Sendiri</button>
+                        <button type="button" class="logo-method" data-method="google"><i class='bx bxl-google'></i> Dari Google</button>
+                    </div>
+                    <form id="logo-upload-form" class="logo-form" data-method="upload">
+                        <div class="logo-input-group">
+                            <label for="logo-upload-input">Pilih file logo tanpa latar (PNG, SVG, JPG, WebP)</label>
+                            <input type="file" id="logo-upload-input" accept="image/png,image/svg+xml,image/webp,image/jpeg">
+                            <p class="input-hint">Logo akan dikonversi otomatis menjadi warna biru dengan tetap menjaga transparansi.</p>
+                        </div>
+                    </form>
+                    <form id="logo-google-form" class="logo-form hidden" data-method="google">
+                        <div class="logo-input-group">
+                            <label for="logo-google-input">Ambil logo dari Google (masukkan domain)</label>
+                            <div class="logo-input-row">
+                                <input type="text" id="logo-google-input" placeholder="contoh: spotify.com">
+                                <button type="submit" class="btn btn-primary"><i class='bx bx-magic-wand'></i> Ambil Logo</button>
+                            </div>
+                            <p class="input-hint">Kami memanfaatkan layanan favicon Google untuk mendapatkan logo transparan dan langsung mewarnainya menjadi biru.</p>
+                        </div>
+                    </form>
+                    <div class="logo-preview">
+                        <div class="logo-preview-frame">
+                            <img id="logo-preview-image" alt="Pratinjau logo biru">
+                            <div id="logo-preview-placeholder" class="logo-preview-placeholder">
+                                <i class='bx bx-image-alt'></i>
+                            </div>
+                        </div>
+                        <p class="logo-status info" id="logo-status-message">Belum ada logo yang dipilih.</p>
+                        <div class="logo-preview-actions">
+                            <button type="button" class="btn btn-primary" id="download-logo-btn" disabled><i class='bx bx-download'></i> Unduh PNG</button>
+                            <button type="button" class="btn btn-ghost" id="copy-logo-btn" disabled><i class='bx bx-copy'></i> Salin Data URL</button>
+                        </div>
+                        <p class="input-hint">Logo biru yang dihasilkan akan otomatis terisi ke kolom <strong>Logo</strong> pada panel admin.</p>
                     </div>
                 </div>
             </section>
@@ -841,12 +1060,16 @@
                 </select>
 
                 <label for="product-icon-input">Kelas Ikon (dari Boxicons)</label>
-                <input type="text" id="product-icon-input" placeholder="contoh: bxl-spotify" required>
+                <input type="text" id="product-icon-input" placeholder="contoh: bxl-spotify">
 
                 <div id="icon-preview-box">
                     <label>Pratinjau Ikon</label>
                     <div id="icon-preview"><i class='bx bx-image-alt'></i></div>
                 </div>
+
+                <label for="product-logo-input">Logo (Opsional)</label>
+                <input type="text" id="product-logo-input" placeholder="tempel data URL atau tautan logo biru">
+                <p class="input-hint">Biarkan kosong untuk memakai ikon Boxicons. Gunakan generator logo agar warnanya otomatis biru.</p>
 
                 <label for="product-price-input">Harga (Rp) - Opsional</label>
                 <input type="number" id="product-price-input" min="0" step="1000" placeholder="contoh: 25000">
@@ -875,6 +1098,7 @@
             const modalCloseBtn = document.querySelector('.modal-close');
             const modalDurationWrapper = document.querySelector('.modal-product-duration');
             const modalDurationText = document.querySelector('.modal-product-duration-text');
+            const modalIconContainer = document.querySelector('.modal-product-icon');
             const productGrid = document.querySelector('.product-grid');
             const pricingOptions = document.querySelectorAll('.pricing-options .option');
 
@@ -890,9 +1114,353 @@
             const addProductForm = document.getElementById('add-product-form');
             const iconInput = document.getElementById('product-icon-input');
             const iconPreview = document.querySelector('#icon-preview i');
+            const productLogoInput = document.getElementById('product-logo-input');
+            const logoMethods = document.querySelectorAll('.logo-method');
+            const logoForms = document.querySelectorAll('.logo-form');
+            const logoUploadInput = document.getElementById('logo-upload-input');
+            const logoGoogleForm = document.getElementById('logo-google-form');
+            const logoGoogleInput = document.getElementById('logo-google-input');
+            const logoPreviewFrame = document.querySelector('.logo-preview-frame');
+            const logoPreviewImage = document.getElementById('logo-preview-image');
+            const logoStatusMessage = document.getElementById('logo-status-message');
+            const downloadLogoBtn = document.getElementById('download-logo-btn');
+            const copyLogoBtn = document.getElementById('copy-logo-btn');
             const toast = document.getElementById('toast-notification');
 
             const whatsappNumber = '6281234567890';
+
+            const logoCanvas = document.createElement('canvas');
+            const logoCtx = logoCanvas.getContext('2d');
+
+            const updateLogoPreviewState = (hasImage) => {
+                if (logoPreviewFrame) {
+                    logoPreviewFrame.classList.toggle('has-image', hasImage);
+                }
+                if (!hasImage && logoPreviewImage) {
+                    logoPreviewImage.removeAttribute('src');
+                }
+            };
+
+            const setLogoStatus = (message, type = 'info') => {
+                if (!logoStatusMessage) {
+                    return;
+                }
+                logoStatusMessage.textContent = message;
+                logoStatusMessage.classList.remove('success', 'error', 'info');
+                logoStatusMessage.classList.add(type);
+            };
+
+            let latestLogoDataUrl = '';
+
+            const resetLogoActions = () => {
+                latestLogoDataUrl = '';
+                if (downloadLogoBtn) {
+                    downloadLogoBtn.disabled = true;
+                }
+                if (copyLogoBtn) {
+                    copyLogoBtn.disabled = true;
+                }
+                updateLogoPreviewState(false);
+            };
+
+            const createBlueLogo = (image) => {
+                if (!image || !image.width || !image.height || !logoCtx) {
+                    return null;
+                }
+
+                const size = 512;
+                logoCanvas.width = size;
+                logoCanvas.height = size;
+                logoCtx.clearRect(0, 0, size, size);
+
+                const scale = Math.min((size * 0.7) / image.width, (size * 0.7) / image.height);
+                const width = image.width * scale;
+                const height = image.height * scale;
+                const x = (size - width) / 2;
+                const y = (size - height) / 2;
+
+                logoCtx.drawImage(image, x, y, width, height);
+
+                const imageData = logoCtx.getImageData(0, 0, size, size);
+                const { data } = imageData;
+                const baseBlue = { r: 56, g: 189, b: 248 };
+                const tolerance = 24;
+
+                const gatherBackgroundColor = () => {
+                    const samples = [];
+                    const startX = Math.max(0, Math.floor(x));
+                    const endX = Math.min(size - 1, Math.floor(x + width));
+                    const startY = Math.max(0, Math.floor(y));
+                    const endY = Math.min(size - 1, Math.floor(y + height));
+                    const stepX = Math.max(1, Math.floor(width / 10));
+                    const stepY = Math.max(1, Math.floor(height / 10));
+
+                    const addSample = (sampleX, sampleY) => {
+                        const idx = (sampleY * size + sampleX) * 4;
+                        const alpha = data[idx + 3];
+                        if (alpha > 200) {
+                            const red = data[idx];
+                            const green = data[idx + 1];
+                            const blue = data[idx + 2];
+                            samples.push([red, green, blue]);
+                        }
+                    };
+
+                    addSample(startX, startY);
+                    addSample(startX, endY);
+                    addSample(endX, startY);
+                    addSample(endX, endY);
+
+                    for (let sampleX = startX; sampleX <= endX; sampleX += stepX) {
+                        addSample(sampleX, startY);
+                        addSample(sampleX, endY);
+                    }
+
+                    for (let sampleY = startY; sampleY <= endY; sampleY += stepY) {
+                        addSample(startX, sampleY);
+                        addSample(endX, sampleY);
+                    }
+
+                    if (samples.length === 0) {
+                        return null;
+                    }
+
+                    const [totalR, totalG, totalB] = samples.reduce(
+                        (acc, [red, green, blue]) => {
+                            acc[0] += red;
+                            acc[1] += green;
+                            acc[2] += blue;
+                            return acc;
+                        },
+                        [0, 0, 0]
+                    );
+
+                    return {
+                        r: totalR / samples.length,
+                        g: totalG / samples.length,
+                        b: totalB / samples.length,
+                    };
+                };
+
+                const backgroundColor = gatherBackgroundColor();
+
+                const isSimilarToBackground = (red, green, blue) => {
+                    if (!backgroundColor) {
+                        return false;
+                    }
+
+                    const diffR = Math.abs(red - backgroundColor.r);
+                    const diffG = Math.abs(green - backgroundColor.g);
+                    const diffB = Math.abs(blue - backgroundColor.b);
+
+                    return diffR <= tolerance && diffG <= tolerance && diffB <= tolerance;
+                };
+
+                for (let i = 0; i < data.length; i += 4) {
+                    const alpha = data[i + 3];
+
+                    if (alpha <= 10) {
+                        data[i + 3] = 0;
+                        continue;
+                    }
+
+                    const pixelIndex = i / 4;
+                    const px = pixelIndex % size;
+                    const py = Math.floor(pixelIndex / size);
+                    const nearEdge = px < 6 || px > size - 7 || py < 6 || py > size - 7;
+
+                    const red = data[i];
+                    const green = data[i + 1];
+                    const blue = data[i + 2];
+                    const isNearWhite = red > 240 && green > 240 && blue > 240;
+
+                    if (isSimilarToBackground(red, green, blue) || (isNearWhite && nearEdge)) {
+                        data[i + 3] = 0;
+                        continue;
+                    }
+
+                    const luminance = (0.2126 * red + 0.7152 * green + 0.0722 * blue) / 255;
+                    const factor = 0.35 + luminance * 0.65;
+
+                    data[i] = Math.min(255, Math.round(baseBlue.r * factor));
+                    data[i + 1] = Math.min(255, Math.round(baseBlue.g * factor));
+                    data[i + 2] = Math.min(255, Math.round(baseBlue.b * factor));
+                    data[i + 3] = alpha;
+                }
+
+                logoCtx.clearRect(0, 0, size, size);
+                logoCtx.putImageData(imageData, 0, 0);
+
+                return logoCanvas.toDataURL('image/png');
+            };
+
+            const handleGeneratedLogo = (dataUrl, sourceLabel) => {
+                if (!dataUrl) {
+                    setLogoStatus('Gagal membuat logo biru. Coba ulangi dengan sumber berbeda.', 'error');
+                    resetLogoActions();
+                    return;
+                }
+
+                latestLogoDataUrl = dataUrl;
+
+                if (logoPreviewImage) {
+                    logoPreviewImage.src = dataUrl;
+                }
+
+                updateLogoPreviewState(true);
+
+                if (downloadLogoBtn) {
+                    downloadLogoBtn.disabled = false;
+                }
+
+                if (copyLogoBtn) {
+                    copyLogoBtn.disabled = false;
+                }
+
+                if (productLogoInput) {
+                    productLogoInput.value = dataUrl;
+                }
+
+                const label = sourceLabel || 'sumber yang dipilih';
+                setLogoStatus(`Logo dari ${label} siap digunakan. Warnanya otomatis biru.`, 'success');
+            };
+
+            const handleLogoError = (message) => {
+                setLogoStatus(message, 'error');
+            };
+
+            const processLogoSource = (src, sourceLabel) => {
+                if (!src) {
+                    handleLogoError('Logo tidak ditemukan. Silakan coba lagi.');
+                    resetLogoActions();
+                    return;
+                }
+
+                const image = new Image();
+                image.crossOrigin = 'anonymous';
+                image.decoding = 'async';
+
+                image.onload = () => {
+                    try {
+                        const tinted = createBlueLogo(image);
+                        handleGeneratedLogo(tinted, sourceLabel);
+                    } catch (error) {
+                        console.error(error);
+                        handleLogoError('Terjadi kesalahan saat mengolah logo.');
+                        resetLogoActions();
+                    }
+                };
+
+                image.onerror = () => {
+                    handleLogoError('Gagal memuat logo. Pastikan file atau domain valid.');
+                    resetLogoActions();
+                };
+
+                image.src = src;
+            };
+
+            const setActiveLogoMethod = (method) => {
+                logoMethods.forEach(button => {
+                    const isActive = button.dataset.method === method;
+                    button.classList.toggle('active', isActive);
+                });
+
+                logoForms.forEach(form => {
+                    form.classList.toggle('hidden', form.dataset.method !== method);
+                });
+            };
+
+            setActiveLogoMethod('upload');
+            resetLogoActions();
+            setLogoStatus('Belum ada logo yang dipilih.', 'info');
+
+            logoMethods.forEach(button => {
+                button.addEventListener('click', () => setActiveLogoMethod(button.dataset.method));
+            });
+
+            if (logoUploadInput) {
+                logoUploadInput.addEventListener('change', (event) => {
+                    const [file] = event.target.files || [];
+
+                    if (!file) {
+                        return;
+                    }
+
+                    if (!file.type.startsWith('image/')) {
+                        handleLogoError('Format file tidak didukung. Pilih gambar PNG, SVG, JPG, atau WebP.');
+                        event.target.value = '';
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = () => processLogoSource(reader.result, 'file yang kamu unggah');
+                    reader.onerror = () => handleLogoError('Gagal membaca file logo. Silakan coba lagi.');
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            if (logoGoogleForm) {
+                logoGoogleForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    const query = logoGoogleInput ? logoGoogleInput.value.trim() : '';
+
+                    if (!query) {
+                        handleLogoError('Masukkan domain yang ingin dicari logonya.');
+                        return;
+                    }
+
+                    const sanitized = query
+                        .replace(/^https?:\/\//, '')
+                        .replace(/^www\./, '')
+                        .split(/[/?#]/)[0];
+
+                    if (!sanitized) {
+                        handleLogoError('Domain tidak valid. Contoh: spotify.com');
+                        return;
+                    }
+
+                    setLogoStatus(`Mengambil logo dari Google untuk ${sanitized}...`, 'info');
+                    const googleLogoUrl = `https://www.google.com/s2/favicons?sz=256&domain_url=${encodeURIComponent(sanitized)}`;
+                    processLogoSource(googleLogoUrl, `Google (${sanitized})`);
+                });
+            }
+
+            if (downloadLogoBtn) {
+                downloadLogoBtn.addEventListener('click', () => {
+                    if (!latestLogoDataUrl) {
+                        return;
+                    }
+
+                    const link = document.createElement('a');
+                    link.href = latestLogoDataUrl;
+                    link.download = `logo-produk-biru-${Date.now()}.png`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    setLogoStatus('Logo berhasil diunduh dalam format PNG.', 'success');
+                });
+            }
+
+            if (copyLogoBtn) {
+                copyLogoBtn.addEventListener('click', async () => {
+                    if (!latestLogoDataUrl) {
+                        return;
+                    }
+
+                    if (!navigator.clipboard) {
+                        handleLogoError('Clipboard tidak tersedia. Salin manual dari kolom Logo.');
+                        return;
+                    }
+
+                    try {
+                        await navigator.clipboard.writeText(latestLogoDataUrl);
+                        setLogoStatus('Data URL logo berhasil disalin ke clipboard.', 'success');
+                    } catch (error) {
+                        console.error(error);
+                        handleLogoError('Gagal menyalin data URL. Silakan salin manual dari kolom Logo.');
+                    }
+                });
+            }
 
             const isAnyAdminActive = () => Array.from(adminSections).some(section => section.classList.contains('active'));
 
@@ -942,6 +1510,16 @@
 
                 const numericPrice = Number(price);
                 return Number.isNaN(numericPrice) ? 'Hubungi admin' : formatCurrency(numericPrice);
+            };
+
+            const createProductVisual = (product) => {
+                const logoSource = typeof product.logo === 'string' ? product.logo.trim() : '';
+                if (logoSource) {
+                    return `<img src="${logoSource}" alt="Logo ${product.name}">`;
+                }
+
+                const iconClass = product.icon && product.icon.trim() !== '' ? product.icon : 'bx-image-alt';
+                return `<i class='bx ${iconClass}'></i>`;
             };
 
             const products = [
@@ -994,8 +1572,10 @@
                     card.className = 'product-card';
                     const priceLabel = formatPriceLabel(product.price);
                     const durationBadge = product.duration ? `<span class="product-duration"><i class='bx bx-time-five'></i> ${product.duration}</span>` : '';
+                    const visualMarkup = createProductVisual(product);
+                    const datasetLogo = typeof product.logo === 'string' ? product.logo.trim() : '';
                     card.innerHTML = `
-                        <div class="product-image"><i class='bx ${product.icon}'></i></div>
+                        <div class="product-image">${visualMarkup}</div>
                         <span class="product-category"><i class='bx bx-category'></i> ${product.category}</span>
                         <h3 class="product-name">${product.name}</h3>
                         <p class="product-description">${truncateText(product.description)}</p>
@@ -1005,7 +1585,8 @@
                     `;
                     card.dataset.name = product.name;
                     card.dataset.category = product.category;
-                    card.dataset.icon = product.icon;
+                    card.dataset.icon = product.icon && product.icon.trim() !== '' ? product.icon : 'bx-image-alt';
+                    card.dataset.logo = datasetLogo;
                     card.dataset.description = product.description;
                     card.dataset.price = product.price ?? '';
                     card.dataset.duration = product.duration ?? '';
@@ -1022,7 +1603,14 @@
 
             const showModal = (data) => {
                 resetPricingOptions();
-                document.querySelector('.modal-product-icon').innerHTML = `<i class='bx ${data.icon}'></i>`;
+                if (modalIconContainer) {
+                    const productLogo = typeof data.logo === 'string' ? data.logo.trim() : '';
+                    if (productLogo) {
+                        modalIconContainer.innerHTML = `<img src="${productLogo}" alt="Logo ${data.name}">`;
+                    } else {
+                        modalIconContainer.innerHTML = `<i class='bx ${data.icon}'></i>`;
+                    }
+                }
                 document.querySelector('.modal-product-category').textContent = data.category;
                 document.querySelector('.modal-product-title').textContent = data.name;
                 const priceLabel = formatPriceLabel(data.price);
@@ -1092,10 +1680,13 @@
                 const normalizedPrice = parsedPrice === null || Number.isNaN(parsedPrice) ? null : Math.max(parsedPrice, 0);
                 const rawDuration = document.getElementById('product-duration-input').value.trim();
                 const normalizedDuration = rawDuration === '' ? null : rawDuration;
+                const iconClass = iconInput ? iconInput.value.trim() : '';
+                const logoValue = productLogoInput ? productLogoInput.value.trim() : '';
                 const newProduct = {
                     name: document.getElementById('product-name-input').value.trim(),
                     category: document.getElementById('product-category-input').value,
-                    icon: document.getElementById('product-icon-input').value.trim() || 'bx-package',
+                    icon: iconClass === '' ? 'bx-image-alt' : iconClass,
+                    logo: logoValue === '' ? null : logoValue,
                     price: normalizedPrice,
                     duration: normalizedDuration,
                     description: document.getElementById('product-description-input').value.trim()
@@ -1105,6 +1696,9 @@
                 showToast();
                 addProductForm.reset();
                 iconPreview.className = 'bx bx-image-alt';
+                if (productLogoInput) {
+                    productLogoInput.value = '';
+                }
             });
 
             adminAccessLink.addEventListener('click', () => {
